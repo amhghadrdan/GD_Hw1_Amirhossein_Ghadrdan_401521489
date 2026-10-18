@@ -1,0 +1,12 @@
+{
+  "game": "Dune Dash",
+  "unity": "2022.3.62f1",
+  "platform": "Linux x86_64",
+  "input": "Unity New Input System 1.7.0",
+  "runtime_checks": 25,
+  "passed": 25,
+  "failed": 0,
+  "screenshots": 7,
+  "build": "Builds/Linux/DuneDash.x86_64",
+  "launch": "./RunGame.sh"
+}

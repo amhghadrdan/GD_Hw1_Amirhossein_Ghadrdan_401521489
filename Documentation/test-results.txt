@@ -1,0 +1,25 @@
+PASS: Main menu on launch
+PASS: Space starts run through New Input System
+PASS: Distance and live score advance
+PASS: Space jumps
+PASS: Animator Jump
+PASS: No double jump
+PASS: Returns to ground
+PASS: Shift activates dash
+PASS: Dash cannot spam
+PASS: Dash smashes obstacles without damage
+PASS: Coin trigger awards 25
+PASS: Escape opens pause
+PASS: Pause freezes simulation
+PASS: Escape resumes
+PASS: Ground hazard removes one life
+PASS: Hit protection prevents repeat damage
+PASS: Flying hazard removes one life
+PASS: Third hit ends run
+PASS: Game Over screen
+PASS: Animator Death
+PASS: Record persisted with PlayerPrefs
+PASS: R restarts with three lives
+PASS: Record survives restart
+PASS: Main menu resets pause time
+PASS: Parallax ground covers the viewport continuously

@@ -1,0 +1,9 @@
+2026-10-18
+Unity version: 2022.3.62f1
+Compiler: Unity bundled Mono/Roslyn C# compiler
+References: Unity 2022.3 managed assemblies + official Input System 1.7.0 + UnityEngine.UI
+
+PASS: Input System runtime source compilation. Vendor warnings only.
+PASS: All DuneDash C# runtime and Editor scripts compiled together, with UNITY_EDITOR enabled. Zero errors and zero warnings in project scripts.
+
+This is a C# compilation check. It does not replace an Editor import, a Unity Build or a gameplay test. Runtime test results will be recorded separately after a licensed Unity Editor can build the game.
