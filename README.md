@@ -2,11 +2,17 @@
 
 **امیرحسین قدردان — 401521489**
 
-[مخزن GitHub](https://github.com/arminf267-cmyk/GD_Hw1_Amirhossein_Ghadrdan_401521489) · [گزارش Word](Documentation/GD_Hw1_Amirhossein_Ghadrdan_401521489.docx) · [گزارش PDF](Documentation/GD_Hw1_Amirhossein_Ghadrdan_401521489.pdf)
+[مخزن GitHub](https://github.com/arminf267-cmyk/GD_Hw1_Amirhossein_Ghadrdan_401521489) · [گزارش PDF](Documentation/GD_Hw1_Amirhossein_Ghadrdan_401521489.pdf)
 
 ![نمای بازی](Documentation/Screenshots/07-gameplay.png)
 
 بازی دوبعدی دایناسور رانر مطابق صورت تمرین `HM1.pdf`، با طراحی پیکسلی بیابانی، صدای اختصاصی و پروژهٔ کامل Unity.
+
+## نسخهٔ بازیابی‌شده
+
+این پروژه در ۳ آبان ۱۴۰۵ در پوشهٔ `Desktop/HM1` بازیابی شد. خروجی ویندوز ۶۴ بیتی در `Builds/Windows` ساخته شده است؛ برای اجرا روی ویندوز `RunGame.bat` را باز کنید و تمام فایل‌های پوشهٔ Build را کنار هم نگه دارید. بستهٔ آمادهٔ تحویل در `Submission` فقط Build ویندوز، گزارش PDF فارسی و لینک مخزن را دارد.
+
+نسخهٔ لینوکس نیز دوباره اجرا شد و هر ۲۵ آزمون آن موفق بود. خروجی ویندوز با Unity ساخته و فایل‌های آن بررسی شده‌اند؛ آزمون اجرای ویندوز روی این سیستم لینوکس انجام نشده است.
 
 ## اجرای مستقیم روی این سیستم
 
@@ -78,6 +84,14 @@ UNITY_EDITOR=/path/to/Editor/Unity ./Tools/unity.sh open
 - `Documentation/SOURCES.md`: منابع و مجوز فونت‌ها و توضیح استفاده از ابزار کمکی.
 
 بازی برای اجرا به Python نیاز ندارد. فایل‌های هنری و صوتی آماده در پروژه قرار دارند. برای دریافت اولیهٔ بستهٔ ورودی و فعال‌سازی ویرایشگر Unity، اینترنت لازم است. اجرای Build آماده به اینترنت نیاز ندارد.
+
+## ساخت PDF فارسی
+
+```bash
+python3 Tools/create_pdf_report.py
+```
+
+این ابزار با Chrome یا Chromium و قلم فارسی نصب‌شده، گزارش را مستقیم به PDF راست‌به‌چپ با لینک قابل‌کلیک مخزن تبدیل می‌کند.
 
 ## بستهٔ تحویل
 

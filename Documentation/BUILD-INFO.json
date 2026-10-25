@@ -1,12 +1,28 @@
 {
   "game": "Dune Dash",
   "unity": "2022.3.62f1",
-  "platform": "Linux x86_64",
+  "platform": "Linux x86_64 and Windows x86_64",
   "input": "Unity New Input System 1.7.0",
   "runtime_checks": 25,
   "passed": 25,
   "failed": 0,
   "screenshots": 7,
   "build": "Builds/Linux/DuneDash.x86_64",
-  "launch": "./RunGame.sh"
+  "launch": "./RunGame.sh",
+  "restored_date": "2026-10-25",
+  "builds": [
+    {
+      "platform": "Linux x86_64",
+      "path": "Builds/Linux/DuneDash.x86_64",
+      "build_result": "success",
+      "runtime_checks": 25,
+      "runtime_passed": 25
+    },
+    {
+      "platform": "Windows x86_64",
+      "path": "Builds/Windows/DuneDash.exe",
+      "build_result": "success",
+      "runtime_tested": false
+    }
+  ]
 }
