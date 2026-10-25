@@ -15,8 +15,13 @@ def figure(name, caption):
 def page(content, number):
     return '<article><main>'+content+'</main><footer>امیرحسین قدردان · شمارهٔ دانشجویی ۴۰۱۵۲۱۴۸۹ · صفحهٔ '+str(number)+'</footer></article>'
 windows = (ROOT/'Builds/Windows/DuneDash.exe').is_file()
+portable = windows and (ROOT/'Delivery/DuneDash-Portable.exe').is_file()
 platform = 'ویندوز ۶۴ بیتی' if windows else 'لینوکس ۶۴ بیتی'
-launch = 'DuneDash.exe' if windows else 'DuneDash.x86_64'
+launch = 'DuneDash-Portable.exe' if portable else 'DuneDash.exe' if windows else 'DuneDash.x86_64'
+if portable:
+    delivery_instructions = 'فقط فایل '+latin(launch)+' را اجرا کنید. تمام فایل‌های لازم داخل این فایل بسته‌بندی شده‌اند و هنگام اجرا خودکار در پوشهٔ موقت باز می‌شوند؛ نگه‌داری DLL یا پوشهٔ داده در کنار آن لازم نیست.'
+else:
+    delivery_instructions = 'فایل '+latin(launch)+' را همراه با پوشهٔ داده‌ها و کتابخانه‌های کناری آن نگه دارید و اجرا کنید.'
 font = Path('/usr/share/fonts/truetype/vazirmatn/Vazirmatn-Regular.ttf')
 if not font.exists():
     font = Path(subprocess.check_output(['fc-match','-f','%{file}','sans:lang=fa'],text=True).strip())
@@ -35,7 +40,7 @@ summary = '''<header><div class="eyebrow">طراحی بازی‌های کامپ�
 summary += ''.join('<tr><td>'+label+'</td><td>'+description+'</td></tr>' for label,description in rows)
 summary += '''</tbody></table><h3>ساختار و بررسی اجرا</h3><p>مدیریت چرخهٔ بازی و امتیاز در '''+latin('GameManager')+'، حرکت و سلامت در '+latin('DinoController')+' و تولید موانع در '+latin('ObstacleSpawner')+''' انجام می‌شود. رابط، صدا و جلوه‌ها در کلاس‌های مستقل نگه‌داری شده‌اند.</p>
 <p>نسخهٔ لینوکس روی همین سیستم اجرا و با ۲۵ آزمون خودکار بررسی شده است؛ همهٔ آزمون‌ها موفق بوده‌اند. این بررسی‌ها شامل ورودی، پرش، حرکت سریع، سکه، برخوردها، توقف، پایان، ذخیرهٔ رکورد و شروع مجدد است.</p>
-<h3>روش اجرای خروجی تحویل</h3><p>خروجی ارائه‌شده برای '''+platform+' است. فایل '+latin(launch)+''' را همراه با پوشهٔ داده‌ها و کتابخانه‌های کناری آن نگه دارید و اجرا کنید. در یونیتی نیز صحنهٔ '''+latin('Desert.unity')+''' را باز کنید و دکمهٔ اجرا را بزنید.</p>
+<h3>روش اجرای خروجی تحویل</h3><p>خروجی ارائه‌شده برای '''+platform+' است. '+delivery_instructions+''' در یونیتی نیز صحنهٔ '''+latin('Desert.unity')+''' را باز کنید و دکمهٔ اجرا را بزنید.</p>
 <p class="sources">منابع: صورت تمرین و مستندات رسمی یونیتی برای ورودی، انیمیشن و ذخیرهٔ رکورد. فونت بازی لاتـو با مجوز آزاد است. کد و مستندات با کمک ابزار '''+latin('OpenAI Codex')+''' تهیه شده‌اند. جزئیات منابع در '''+latin('Documentation/SOURCES.md')+''' موجود است.</p>'''
 images1 = '<h2>تصاویر بازی؛ شروع و گیم‌پلی</h2><p class="note">تصاویر از اجرای واقعی همین سورس در لینوکس گرفته شده‌اند.</p>'
 images1 += figure('01-main-menu.png','تصویر ۱ — منوی اصلی، شروع بازی و راهنمای کنترل‌ها')

@@ -28,5 +28,19 @@
   "visual_theme": "Salt Coast",
   "asset_revision": "salt-coast-v1",
   "repository": "https://github.com/amhghadrdan/GD_Hw1_Amirhossein_Ghadrdan_401521489",
-  "github_account": "amhghadrdan"
+  "github_account": "amhghadrdan",
+  "windows_portable": {
+    "game": "Dune Dash - Salt Coast",
+    "format": "single-file portable Windows launcher",
+    "file": "DuneDash-Portable.exe",
+    "size_bytes": 19934600,
+    "sha256": "f666f46b97251ba85c3c9d86ff8c5f5b2fdcf74d6b9559cd8ffbe8c93dc73528",
+    "archive_integrity": "pass",
+    "embedded_player_files_verified": 130,
+    "requires_administrator": false,
+    "requires_separate_game_files": false,
+    "uses_temporary_extraction": true,
+    "windows_runtime_tested": false,
+    "path": "Delivery/DuneDash-Portable.exe"
+  }
 }
