@@ -14,14 +14,6 @@ def figure(name, caption):
     return '<figure><img src="'+uri+'" alt="'+html.escape(caption)+'"><figcaption>'+caption+'</figcaption></figure>'
 def page(content, number):
     return '<article><main>'+content+'</main><footer>امیرحسین قدردان · شمارهٔ دانشجویی ۴۰۱۵۲۱۴۸۹ · صفحهٔ '+str(number)+'</footer></article>'
-windows = (ROOT/'Builds/Windows/DuneDash.exe').is_file()
-portable = windows and (ROOT/'Delivery/DuneDash-Portable.exe').is_file()
-platform = 'ویندوز ۶۴ بیتی' if windows else 'لینوکس ۶۴ بیتی'
-launch = 'DuneDash-Portable.exe' if portable else 'DuneDash.exe' if windows else 'DuneDash.x86_64'
-if portable:
-    delivery_instructions = 'فقط فایل '+latin(launch)+' را اجرا کنید. تمام فایل‌های لازم داخل این فایل بسته‌بندی شده‌اند و هنگام اجرا خودکار در پوشهٔ موقت باز می‌شوند؛ نگه‌داری DLL یا پوشهٔ داده در کنار آن لازم نیست.'
-else:
-    delivery_instructions = 'فایل '+latin(launch)+' را همراه با پوشهٔ داده‌ها و کتابخانه‌های کناری آن نگه دارید و اجرا کنید.'
 font = Path('/usr/share/fonts/truetype/vazirmatn/Vazirmatn-Regular.ttf')
 if not font.exists():
     font = Path(subprocess.check_output(['fc-match','-f','%{file}','sans:lang=fa'],text=True).strip())
@@ -36,9 +28,6 @@ summary = '''<header><div class="eyebrow">طراحی بازی‌های کامپ�
 <h3>ساختار کد</h3>
 <p>پروژه با '''+latin('Unity 2022.3.62f1')+' و زبان '+latin('C#')+' ساخته شده است. ورودی‌ها از '+latin('New Input System 1.7.0')+' خوانده می‌شوند. '+latin('GameManager')+' امتیاز و وضعیت بازی را نگه می‌دارد و '+latin('DinoController')+' مسئول حرکت و جان‌های دایناسور است. '+latin('ObstacleSpawner')+''' موانع و سکه‌ها را تولید می‌کند.</p>
 <p>کلاس‌های '''+latin('GroundObstacle')+'، '+latin('FlyingObstacle')+' و '+latin('Coin')+' از '+latin('Interactable')+' ارث می‌برند. حرکت مشترک آن‌ها در کلاس پایه و رفتار برخورد در کلاس‌های فرزند قرار دارد. انیمیشن دایناسور با '+latin('Animator')+' و چهار حالت '+latin('Run / Jump / Hit / Death')+''' کنترل می‌شود. هنگام آسیب، رنگ کاراکتر تغییر می‌کند و برای مدت کوتاهی چشمک می‌زند.</p>
-<h3>اجرا و بررسی</h3>
-<p>نسخهٔ تحویل برای '''+platform+' است. '+delivery_instructions+'''</p>
-<p>نسخهٔ لینوکس اجرا شده و هر ۲۵ بررسی خودکار آن موفق بوده است؛ از جمله پرش، حرکت سریع، برخورد، سکه، توقف، ذخیرهٔ رکورد و شروع دوباره. خروجی ویندوز ساخته شده و سلامت بستهٔ اجرایی بررسی شده است، اما اجرای آن روی ویندوز در این سیستم آزمایش نشده است. تصاویر صفحات بعد از اجرای نسخهٔ لینوکس گرفته شده‌اند.</p>
 '''
 images1 = '<h2>منوی اصلی و محیط بازی</h2>'
 images1 += figure('01-main-menu.png','تصویر ۱ — منوی اصلی، شروع بازی و راهنمای کنترل‌ها')
