@@ -24,5 +24,9 @@
       "build_result": "success",
       "runtime_tested": false
     }
-  ]
+  ],
+  "visual_theme": "Salt Coast",
+  "asset_revision": "salt-coast-v1",
+  "repository": "https://github.com/amhghadrdan/GD_Hw1_Amirhossein_Ghadrdan_401521489",
+  "github_account": "amhghadrdan"
 }

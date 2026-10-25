@@ -17,7 +17,7 @@ namespace DuneDash
             cameraObject.tag = "MainCamera";
             var camera = cameraObject.GetComponent<Camera>();
             camera.orthographic = true; camera.orthographicSize = 6;
-            camera.backgroundColor = Hex("F7DFC0"); camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = Hex("DCE9EC"); camera.clearFlags = CameraClearFlags.SolidColor;
             camera.transform.position = new Vector3(0,0,-10);
             camera.allowHDR = false; camera.allowMSAA = false;
             var game = gameObject.AddComponent<GameManager>();
@@ -43,23 +43,23 @@ namespace DuneDash
         }
         void BuildEnvironment()
         {
-            Sprite("Desert sun","Sun",new Vector3(5.6f,2.4f,0),-90).transform.localScale = Vector3.one*1.3f;
+            Sprite("Ringed coastal moon","Sun",new Vector3(5.6f,2.4f,0),-90).transform.localScale = Vector3.one*1.3f;
             Layer("Clouds","Cloud",new Vector3(0,3,0),.065f,-85,18);
             Layer("Far dunes","FarDunes",new Vector3(0,-3,0),.12f,-80,24);
             Layer("Middle dunes","MidDunes",new Vector3(0,-3.3f,0),.28f,-70,24);
             Layer("Near dunes","NearDunes",new Vector3(0,-4,0),.48f,-60,24);
             var sand = Sprite("Sand fill","Pixel",new Vector3(0,-6,0),-12);
-            sand.color = Hex("E9BC86"); sand.transform.localScale = new Vector3(120,24,1);
+            sand.color = Hex("87A5B0"); sand.transform.localScale = new Vector3(120,24,1);
             Layer("Ground","Ground",new Vector3(0,DinoController.GroundY,0),1,-5,8);
             var ground = new GameObject("Ground collider",typeof(BoxCollider2D));
             ground.transform.position = new Vector3(0,DinoController.GroundY-.25f,0);
             ground.GetComponent<BoxCollider2D>().size = new Vector2(100,.5f);
-            // Small distant plants make the third parallax depth easy to see.
-            var plants = new GameObject("Distant plants");
+            // Small rock silhouettes make the foreground parallax depth easy to see.
+            var plants = new GameObject("Distant crystals");
             for(int i=0;i<3;i++)
             {
-                var p = Sprite("Cactus silhouette","CactusTall",new Vector3(-8+i*8,-3.05f,0),-40);
-                p.color = Hex("A87E60"); p.transform.localScale = Vector3.one*.38f; p.transform.SetParent(plants.transform);
+                var p = Sprite("Rock silhouette","CactusTall",new Vector3(-8+i*8,-3.05f,0),-40);
+                p.color = Hex("7895A2"); p.transform.localScale = Vector3.one*.38f; p.transform.SetParent(plants.transform);
             }
             plants.AddComponent<ParallaxLayer>().factor = .7f;
         }

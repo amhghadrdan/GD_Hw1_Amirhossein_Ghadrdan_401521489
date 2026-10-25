@@ -2,11 +2,21 @@
 
 **امیرحسین قدردان — 401521489**
 
-[مخزن GitHub](https://github.com/arminf267-cmyk/GD_Hw1_Amirhossein_Ghadrdan_401521489) · [گزارش PDF](Documentation/GD_Hw1_Amirhossein_Ghadrdan_401521489.pdf)
+[مخزن GitHub](https://github.com/amhghadrdan/GD_Hw1_Amirhossein_Ghadrdan_401521489) · [گزارش PDF](Documentation/GD_Hw1_Amirhossein_Ghadrdan_401521489.pdf)
 
 ![نمای بازی](Documentation/Screenshots/07-gameplay.png)
 
-بازی دوبعدی دایناسور رانر مطابق صورت تمرین `HM1.pdf`، با طراحی پیکسلی بیابانی، صدای اختصاصی و پروژهٔ کامل Unity.
+بازی دوبعدی دایناسور رانر مطابق صورت تمرین `HM1.pdf`، با طراحی پیکسلی ساحل نمکی، صدای اختصاصی و پروژهٔ کامل Unity.
+
+## ظاهر ساحل نمکی
+
+نسخهٔ فعلی با تم **Salt Coast** طراحی شده است: کاراکتر سبزآبی با شال کهربایی و کوله، صخره‌های بلوری، پرندگان سفره‌ماهی‌مانند، سکه‌های تراش‌خورده، ماه حلقه‌دار و لایه‌های صخره‌ای آبی. منوها و جلوه‌های حرکت هم با همین رنگ‌بندی هماهنگ‌اند. جزئیات طراحی و رنگ‌ها در `Documentation/DESIGN.md` آمده است.
+
+برای بازتولید فقط تصاویر:
+
+```bash
+python3 Tools/generate_assets.py --art-only
+```
 
 ## نسخهٔ بازیابی‌شده
 

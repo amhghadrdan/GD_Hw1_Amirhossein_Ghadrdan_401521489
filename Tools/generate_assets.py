@@ -2,11 +2,15 @@
 """Original, deterministic pixel art and synthesized sounds. No external art dependencies."""
 from pathlib import Path
 from PIL import Image, ImageDraw
-import math, random, wave, struct, shutil, hashlib
+import math, random, wave, struct, shutil, hashlib, argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--art-only', action='store_true', help='Regenerate pixel art without changing sound or fonts.')
+args = parser.parse_args()
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT/'Assets/DuneDash/Resources'
-random.seed(1977)
-ink='#23464b'; coral='#e47858'; dark='#ad4d43'; light='#ffbe83'; sand='#edbd82'
+random.seed(1027)
+# Salt Coast: ocean slate, sea-glass explorer, amber cloth and pale salt.
+ink='#1c3049'; coral='#63c4a2'; dark='#36877d'; light='#d7f1cd'; sand='#87a5b0'
 def save(im,name,ppu=32,pivot=(.5,0)):
     p=OUT/'Sprites'/f'{name}.png'; im.save(p)
     guid=hashlib.md5(('dunedash/'+name).encode()).hexdigest()
@@ -58,19 +62,27 @@ def dino(name,frame=0,state='run'):
         # The death sprite is drawn on its side, with a closed eye.
         d.polygon([(8,51),(8,43),(16,43),(16,37),(39,37),(39,32),(56,32),(56,49),(44,49),(44,57),(17,57),(17,51)],fill=ink)
         rect((17,40,40,53),coral);rect((42,35,53,46),coral)
+        rect((37,40,41,50),'#e4b970');rect((22,41,30,47),dark)
         d.line((46,38,51,42),fill=ink,width=2); d.line((51,38,46,42),fill=ink,width=2)
         rect((22,54,28,59),ink); rect((34,54,40,59),ink)
     else:
         bob=1 if state=='run' and frame%2 else 0
         # T-rex silhouette, tail, head and jaw, hand-authored at native pixel size.
-        points=[(5,31+bob),(11,36+bob),(18,38+bob),(18,30+bob),(25,30+bob),(25,23+bob),(31,23+bob),(31,8+bob),(35,4+bob),(56,4+bob),(60,8+bob),(60,25+bob),(45,25+bob),(45,30+bob),(37,30+bob),(37,41+bob),(30,49+bob),(16,49+bob),(11,44+bob),(5,42+bob)]
+        points=[(5,31+bob),(11,36+bob),(18,38+bob),(18,30+bob),(25,30+bob),(25,23+bob),(31,23+bob),(29,12+bob),(34,6+bob),(50,6+bob),(57,12+bob),(60,16+bob),(60,25+bob),(45,25+bob),(45,30+bob),(37,30+bob),(37,41+bob),(30,49+bob),(16,49+bob),(11,44+bob),(5,42+bob)]
         d.polygon(points,fill=ink)
-        d.polygon([(8,35+bob),(18,41+bob),(21,34+bob),(28,34+bob),(28,26+bob),(34,26+bob),(34,9+bob),(38,7+bob),(54,7+bob),(57,10+bob),(57,21+bob),(43,21+bob),(43,27+bob),(34,27+bob),(34,40+bob),(28,46+bob),(17,46+bob),(13,41+bob),(8,40+bob)],fill=coral if state!='hit' else '#f7dba7')
+        d.polygon([(8,35+bob),(18,41+bob),(21,34+bob),(28,34+bob),(28,26+bob),(34,26+bob),(33,14+bob),(36,9+bob),(49,9+bob),(54,14+bob),(57,18+bob),(57,21+bob),(43,21+bob),(43,27+bob),(34,27+bob),(34,40+bob),(28,46+bob),(17,46+bob),(13,41+bob),(8,40+bob)],fill=coral if state!='hit' else '#f7dba7')
         rect((35,11+bob,38,21+bob),light)
-        rect((50,10+bob,53,14+bob),ink);rect((50,10+bob,51,11+bob),'#ffffff')
+        rect((49,12+bob,52,16+bob),ink);rect((49,12+bob,50,13+bob),'#ffffff')
         rect((47,20+bob,59,22+bob),ink)
         rect((34,32+bob,43,35+bob),ink);rect((40,34+bob,43,38+bob),ink)
         rect((22,36+bob,26,45+bob),light)
+        # Explorer details are drawn in every pose, including the airborne frame.
+        for x,y in [(32,6),(38,3),(44,4)]:
+            d.polygon([(x,y+5+bob),(x+2,y+bob),(x+5,y+5+bob)],fill=dark)
+        rect((29,24+bob,42,28+bob),'#e4b970')
+        d.polygon([(30,25+bob),(24,24+bob),(12,20+bob+frame%2),(15,27+bob),(29,29+bob)],fill='#c58450')
+        rect((17,29+bob,25,39+bob),ink);rect((19,31+bob,23,37+bob),'#a2cab1')
+        rect((20,33+bob,22,34+bob),'#e4b970')
         # Two genuinely different running leg poses.
         if state=='jump':
             rect((17,47,22,54),ink);rect((17,52,27,55),ink);rect((29,45,34,51),ink);rect((33,48,40,51),ink)
@@ -83,46 +95,61 @@ def dino(name,frame=0,state='run'):
     save(im,name)
 for i in range(4): dino('DinoRun'+str(i),i)
 dino('DinoJump',state='jump');dino('DinoHit',state='hit');dino('DinoDeath',state='death')
+# Crystalline basalt obstacles retain the gameplay names and collider dimensions.
 for name,tall in [('Cactus',False),('CactusTall',True)]:
-    im=Image.new('RGBA',(48,64));d=ImageDraw.Draw(im)
-    d.rectangle((19,8 if tall else 20,30,62),fill=ink)
-    d.rectangle((21,10 if tall else 22,27,61),fill='#44867a')
-    d.rectangle((6,28,12,49),fill=ink);d.rectangle((6,45,22,51),fill=ink)
-    d.rectangle((31,32,42,39),fill=ink);d.rectangle((36,17,42,39),fill=ink)
-    d.rectangle((8,30,10,47),fill='#74ab85');d.rectangle((21,13 if tall else 24,23,55),fill='#8cb98d')
-    d.rectangle((38,20,40,36),fill='#74ab85'); d.rectangle((16,60,34,63),fill=ink)
+    im=Image.new('RGBA',(48,64));d=ImageDraw.Draw(im);peak=5 if tall else 19
+    d.polygon([(5,63),(9,43),(16,36),(18,peak+8),(27,peak),(34,30),(40,39),(44,63)],fill=ink)
+    d.polygon([(10,60),(13,45),(20,39),(21,peak+10),(26,peak+5),(30,32),(36,43),(40,60)],fill='#4f7289')
+    d.polygon([(21,peak+10),(26,peak+5),(26,53),(18,58)],fill='#8eb7be')
+    d.line([(27,peak+12),(25,34),(31,42),(26,58)],fill='#e4b970',width=2)
+    d.polygon([(6,62),(12,52),(18,63)],fill='#c7dfd7');d.polygon([(33,62),(39,49),(44,63)],fill='#9bc4c5')
     save(im,name)
+# Two poses of an airborne salt-coast ray, with a contrasting amber tail.
 for i in range(2):
-    im=Image.new('RGBA',(64,40)); d=ImageDraw.Draw(im)
-    d.polygon([(4,20),(19,14),(31,16),(43,12),(53,16),(62,21),(48,24),(41,29),(26,28),(17,24)],fill=ink)
-    wing=[(23,20),(17,2),(31,9),(39,23)] if i==0 else [(23,19),(21,36),(36,28),(40,21)]
-    d.polygon(wing,fill=ink); d.polygon([(x+2,y) for x,y in wing[:-1]],fill='#628a8c')
-    d.rectangle((47,16,49,18),fill='#f8dd9c'); d.polygon([(54,20),(63,21),(54,23)],fill=coral)
+    im=Image.new('RGBA',(64,40));d=ImageDraw.Draw(im)
+    d.polygon([(2,24),(19,19),(31,13),(46,14),(59,22),(46,29),(29,27),(18,24)],fill=ink)
+    wing=[(20,20),(13,2),(30,9),(40,22)] if i==0 else [(20,20),(14,37),(31,30),(40,22)]
+    d.polygon(wing,fill=ink)
+    d.polygon([(23,20),(18,7 if i==0 else 32),(31,13 if i==0 else 27),(36,22)],fill='#63c4a2')
+    d.polygon([(31,17),(44,17),(53,22),(44,25),(31,24)],fill='#4f7289')
+    d.line([(4,24),(17,24),(23,27)],fill='#e4b970',width=2);d.rectangle((47,19,49,20),fill='#fff0cf')
     save(im,'Bird'+str(i),32,(.5,.5))
 im=Image.new('RGBA',(24,28));d=ImageDraw.Draw(im)
-d.polygon([(7,1),(17,1),(22,7),(22,20),(17,26),(7,26),(1,20),(1,7)],fill='#9d653c')
-d.polygon([(8,3),(16,3),(20,8),(20,19),(16,24),(8,24),(4,19),(4,8)],fill='#f0bb58')
-d.line([(8,6),(7,10),(7,18)],fill='#fff0b1',width=2);d.rectangle((11,8,14,19),fill='#bf833e')
+d.polygon([(12,0),(22,8),(20,20),(12,27),(3,20),(1,8)],fill=ink)
+d.polygon([(12,3),(19,9),(17,19),(12,23),(6,18),(4,9)],fill='#e4b970')
+d.polygon([(12,3),(12,23),(6,18),(4,9)],fill='#fff0cf');d.polygon([(12,10),(17,12),(14,19),(12,23)],fill='#b9784e')
 save(im,'Coin',32,(.5,.5))
-# Wide seamless parallax layers, with transparent sky.
-for name,color,amp,base,periods in [('FarDunes','#e5bc91',42,65,2),('MidDunes','#dca67b',55,88,3),('NearDunes','#c98b67',30,104,4)]:
+# Seamless flat-topped salt cliffs replace the rounded desert dunes.
+for name,color,amp,base,periods in [('FarDunes','#aac3cc',42,65,2),('MidDunes','#779caa',55,88,3),('NearDunes','#4f7289',30,104,4)]:
     im=Image.new('RGBA',(768,192));d=ImageDraw.Draw(im)
-    points=[(x,int(base+amp*math.sin(x/768*math.tau*periods)+amp*.25*math.sin(x/768*math.tau*(periods+1)))) for x in range(769)]
+    profile=[(0,.5),(.12,.5),(.27,-.6),(.35,-.6),(.58,.25),(.68,.25),(.85,.5),(1,.5)]
+    points=[(int((cycle+u)*768/periods),int(base+amp*v)) for cycle in range(periods) for u,v in profile]
     d.polygon(points+[(768,192),(0,192)],fill=color)
+    strata={'FarDunes':'#bfd3d7','MidDunes':'#91b2bc','NearDunes':'#63899c'}[name]
+    for x in range(0,768,96):d.line((x,158,x+60,158),fill=strata,width=2)
     save(im,name,32)
-im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);d.ellipse((2,2,126,126),fill='#f4ba75');d.ellipse((12,12,116,116),fill='#f8c885');save(im,'Sun',32,(.5,.5))
-im=Image.new('RGBA',(256,64));d=ImageDraw.Draw(im);d.rectangle((0,0,255,63),fill='#e9bc86');d.rectangle((0,0,255,3),fill=ink);d.rectangle((0,4,255,8),fill='#b48060')
+im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im)
+d.ellipse((17,10,111,104),fill='#f2d6a4');d.ellipse((39,26,58,45),fill='#ddbc88');d.ellipse((70,52,98,80),fill='#e4c18a');d.ellipse((37,66,48,77),fill='#fff0cf')
+d.arc((2,38,126,106),0,180,fill='#c29a67',width=4);d.arc((4,34,124,101),180,360,fill='#fff0cf',width=3)
+save(im,'Sun',32,(.5,.5))
+im=Image.new('RGBA',(256,64));d=ImageDraw.Draw(im)
+d.rectangle((0,0,255,63),fill=sand);d.rectangle((0,0,255,3),fill=ink);d.rectangle((0,4,255,8),fill='#c4d9d6')
 for _ in range(65):
- x=random.randrange(256);y=random.randrange(14,64);d.rectangle((x,y,x+random.randrange(2,7),y+1),fill=random.choice(['#d5a16e','#f7d5a0','#c69366']))
+    x=random.randrange(256);y=random.randrange(14,64)
+    d.line((x,y,x+random.randrange(2,7),y-2),fill=random.choice(['#6b8f9f','#d4e4df','#a9c5cd']),width=1)
 save(im,'Ground',32,(.5,1))
 im=Image.new('RGBA',(128,64));d=ImageDraw.Draw(im)
-for box in [(2,30,58,49),(25,12,78,48),(59,23,115,49)]: d.ellipse(box,fill='#faecd0')
+d.polygon([(3,39),(16,31),(30,31),(39,19),(66,19),(77,29),(107,29),(121,39),(113,47),(18,47)],fill='#f4faf6')
+d.line((15,53,89,53),fill='#eaf3ef',width=2)
 save(im,'Cloud',32,(.5,.5))
 im=Image.new('RGBA',(64,32));d=ImageDraw.Draw(im)
-d.ellipse((1,6,62,29),fill=(35,70,75,35));save(im,'Shadow',32,(.5,.5))
+d.ellipse((1,6,62,29),fill=(28,48,73,40));save(im,'Shadow',32,(.5,.5))
 im=Image.new('RGBA',(32,32));d=ImageDraw.Draw(im)
 d.polygon([(16,0),(20,12),(31,16),(20,20),(16,31),(12,20),(0,16),(12,12)],fill='#fff0bd');save(im,'Spark',32,(.5,.5))
 im=Image.new('RGBA',(8,8),'white');save(im,'Pixel',32,(.5,.5))
+if args.art_only:
+ print('Generated Salt Coast sprites; sound and fonts were preserved.')
+ raise SystemExit(0)
 # UI typefaces, distributed under the SIL Open Font License.
 for src,name in [('/usr/share/fonts/truetype/lato/Lato-Regular.ttf','Body.ttf'),('/usr/share/fonts/truetype/lato/Lato-Heavy.ttf','Display.ttf')]:
  shutil.copy(src,OUT/'Fonts'/name)

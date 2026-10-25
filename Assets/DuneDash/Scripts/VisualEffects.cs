@@ -33,7 +33,7 @@ namespace DuneDash
             Add(position,spark,Vector3.one*.55f,new Color(1,.94f,.73f),Vector3.up,.28f,false);
         }
         public void Dust(Vector3 position)
-        { Add(position,pixel,new Vector3(.4f,.25f,1),new Color(.73f,.48f,.32f,.5f),new Vector3(-2,.5f,0),.28f,false); }
+        { Add(position,pixel,new Vector3(.4f,.25f,1),new Color(.45f,.59f,.65f,.5f),new Vector3(-2,.5f,0),.28f,false); }
         public void Ghost(SpriteRenderer source)
         { Add(source.transform.position,source.sprite,source.transform.lossyScale,new Color(1,.64f,.34f,.38f),Vector3.left*2.5f,.22f,false); }
         public void Shake(float strength, float time)

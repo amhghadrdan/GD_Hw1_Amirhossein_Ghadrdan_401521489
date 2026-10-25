@@ -1,1 +1,1 @@
-python-docx==1.2.0
+# PDF generation uses the Python standard library and Chrome/Chromium.

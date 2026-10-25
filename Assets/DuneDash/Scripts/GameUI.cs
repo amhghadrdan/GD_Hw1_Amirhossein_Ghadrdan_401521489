@@ -9,7 +9,7 @@ namespace DuneDash
     /// <summary>Canvas-based HUD plus independent main, pause, help and game-over menus.</summary>
     public sealed class GameUI : MonoBehaviour
     {
-        static readonly Color Ink = GameBootstrap.Hex("23464B"), Cream = GameBootstrap.Hex("FFF1D5"), Coral = GameBootstrap.Hex("DF785B"), Muted = GameBootstrap.Hex("778A7E");
+        static readonly Color Ink = GameBootstrap.Hex("1C3049"), Cream = GameBootstrap.Hex("F1F5EE"), Coral = GameBootstrap.Hex("E4B970"), Muted = GameBootstrap.Hex("6A8590");
         GameManager game;
         Font body, display;
         GameObject main, hud, pause, over, help;
@@ -25,28 +25,30 @@ namespace DuneDash
             body = Resources.Load<Font>("Fonts/Body"); display = Resources.Load<Font>("Fonts/Display");
             BuildMain(); BuildHud(); BuildPause(); BuildOver(); BuildHelp();
             var sound = Button(transform,"Sound",new Vector2(-138,-26),new Vector2(100,32),"SOUND ON",()=>AudioDirector.Instance.ToggleMute(),false,new Vector2(1,1));
-            sound.GetComponent<Image>().color = new Color(1,.95f,.83f,.8f);
+            sound.GetComponent<Image>().color = new Color(.94f,.97f,.97f,.9f);
             muteLabel = sound.GetComponentInChildren<Text>(); muteLabel.fontSize=12;
         }
         void BuildMain()
         {
             main = Group("Main Menu");
-            Label(main.transform,"Edition",new Vector2(80,-48),new Vector2(500,30),"DUNE DASH   /   AN ENDLESS DESERT RUN",15,Ink,true);
-            Label(main.transform,"Eyebrow",new Vector2(83,-157),new Vector2(450,25),"SMALL DINO. BIG ADVENTURE.",15,Ink,true);
+            Box(main.transform,"Field notes paper",new Vector2(56,-128),new Vector2(554,438),new Color(Cream.r,Cream.g,Cream.b,.94f));
+            Box(main.transform,"Amber binding",new Vector2(56,-128),new Vector2(5,438),Coral);
+            Label(main.transform,"Edition",new Vector2(80,-48),new Vector2(500,30),"DUNE DASH   /   SALT COAST EXPEDITION",15,Ink,true);
+            Label(main.transform,"Eyebrow",new Vector2(83,-157),new Vector2(450,25),"SALT, STONE & OPEN SKIES.",15,Ink,true);
             var title=Label(main.transform,"Title",new Vector2(74,-197),new Vector2(600,205),"DUNE\nDASH.",91,Ink,true);title.lineSpacing=.82f;
-            Label(main.transform,"Description",new Vector2(83,-410),new Vector2(520,60),"One little dinosaur. An endless horizon.\nJump, dash, and make every life count.",21,Ink);
+            Label(main.transform,"Description",new Vector2(83,-410),new Vector2(520,60),"A sea-glass explorer on a crystal coast.\nFind your rhythm. Follow the horizon.",21,Ink);
             startButton=Button(main.transform,"Start Run",new Vector2(83,-496),new Vector2(215,58),"START RUN    >",()=>game.StartRun());
             Button(main.transform,"How To Play",new Vector2(312,-496),new Vector2(160,58),"HOW TO PLAY",ShowHelp,false);
             Button(main.transform,"Quit",new Vector2(486,-496),new Vector2(90,58),"QUIT",()=>game.Quit(),false);
             Label(main.transform,"Controls",new Vector2(84,-594),new Vector2(600,28),"SPACE  jump       SHIFT  dash       ESC  pause",16,Ink,true);
-            Label(main.transform,"Credit",new Vector2(84,30),new Vector2(700,22),"01 / THE LONG WAY HOME                                 ORIGINAL PIXEL ART + SOUND",12,Ink,false,new Vector2(0,0));
+            Label(main.transform,"Credit",new Vector2(84,30),new Vector2(700,22),"02 / THE SALT COAST                                 ORIGINAL PIXEL ART + SOUND",12,Ink,false,new Vector2(0,0));
             menuBest=Label(main.transform,"Best record",new Vector2(-278,-80),new Vector2(240,45),"PERSONAL BEST  00000",15,Ink,true,new Vector2(1,1));
-            Label(main.transform,"Landscape caption",new Vector2(-350,-573),new Vector2(340,25),"THE DESERT IS CALLING.",15,Ink,true,new Vector2(1,1));
+            Label(main.transform,"Landscape caption",new Vector2(-350,-573),new Vector2(340,25),"FOLLOW THE SALT COAST.",15,Ink,true,new Vector2(1,1));
         }
         void BuildHud()
         {
             hud=Group("HUD");
-            var top=Box(hud.transform,"Header",new Vector2(0,0),new Vector2(0,108),new Color(1,.95f,.84f,.92f),new Vector2(0,1));
+            var top=Box(hud.transform,"Header",new Vector2(0,0),new Vector2(0,108),new Color(.94f,.97f,.97f,.94f),new Vector2(0,1));
             top.anchorMin=new Vector2(0,1);top.anchorMax=Vector2.one;top.offsetMin=new Vector2(0,-108);top.offsetMax=Vector2.zero;
             Label(hud.transform,"Brand",new Vector2(38,-22),new Vector2(240,28),"DUNE / DASH",21,Ink,true);
             for(int i=0;i<3;i++) hearts[i]=Box(hud.transform,"Life "+(i+1),new Vector2(40+i*51,-65),new Vector2(42,13),Coral).GetComponent<Image>();
@@ -65,9 +67,9 @@ namespace DuneDash
         {
             pause=Overlay("Pause Menu");
             var panel=Card(pause.transform,520,460);
-            CenterLabel(panel,"Pause eyebrow",new Vector2(0,174),new Vector2(440,26),"TAKE A BREATHER",14,Coral,true);
+            CenterLabel(panel,"Pause eyebrow",new Vector2(0,174),new Vector2(440,26),"CAMP BREAK",14,Coral,true);
             CenterLabel(panel,"Pause title",new Vector2(0,112),new Vector2(440,64),"PAUSED",49,Cream,true);
-            CenterLabel(panel,"Pause description",new Vector2(0,48),new Vector2(440,60),"The horizon can wait.\nYour run is right where you left it.",19,Cream);
+            CenterLabel(panel,"Pause description",new Vector2(0,48),new Vector2(440,60),"Rest beside the salt cliffs.\nYour expedition is waiting for you.",19,Cream);
             resumeButton=CenterButton(panel,"Resume",new Vector2(0,-34),new Vector2(356,53),"CONTINUE RUN",()=>game.Resume());
             CenterButton(panel,"Restart",new Vector2(0,-100),new Vector2(356,46),"RESTART",()=>game.StartRun(),false);
             CenterButton(panel,"Main Menu",new Vector2(0,-157),new Vector2(356,46),"MAIN MENU",()=>game.ReturnToMenu(),false);
@@ -76,7 +78,7 @@ namespace DuneDash
         {
             over=Overlay("Game Over Menu");
             var panel=Card(over.transform,550,490);
-            CenterLabel(panel,"Over eyebrow",new Vector2(0,194),new Vector2(490,24),"EVERY RUN IS A NEW STORY",14,Coral,true);
+            CenterLabel(panel,"Over eyebrow",new Vector2(0,194),new Vector2(490,24),"ANOTHER PAGE IN YOUR FIELD NOTES",14,Coral,true);
             CenterLabel(panel,"Over title",new Vector2(0,136),new Vector2(490,64),"RUN COMPLETE",43,Cream,true);
             finalScore=CenterLabel(panel,"Final score",new Vector2(0,57),new Vector2(490,75),"00000",57,Cream,true);
             finalCoins=CenterLabel(panel,"Coins collected",new Vector2(0,-2),new Vector2(490,27),"0 COINS COLLECTED",15,Cream);
@@ -87,10 +89,10 @@ namespace DuneDash
         void BuildHelp()
         {
             help=Overlay("How To Play"); var panel=Card(help.transform,660,550);
-            CenterLabel(panel,"Help title",new Vector2(0,213),new Vector2(590,55),"A FEW DESERT RULES",34,Cream,true);
-            CenterLabel(panel,"Jump hint",new Vector2(0,137),new Vector2(560,55),"SPACE  /  GAMEPAD A\nJump over cacti. You can jump again after landing.",18,Cream);
+            CenterLabel(panel,"Help title",new Vector2(0,213),new Vector2(590,55),"YOUR COASTAL FIELD GUIDE",34,Cream,true);
+            CenterLabel(panel,"Jump hint",new Vector2(0,137),new Vector2(560,55),"SPACE  /  GAMEPAD A\nJump over crystal spires. Jump again after landing.",18,Cream);
             CenterLabel(panel,"Dash hint",new Vector2(0,50),new Vector2(560,70),"SHIFT  /  GAMEPAD X\nBurst forward and smash obstacles for +5.\nYour dash recharges in 2.2 seconds.",18,Cream);
-            CenterLabel(panel,"Life hint",new Vector2(0,-43),new Vector2(560,65),"THREE LIVES. ONE LONG RUN.\nAvoid low birds or dash through them.\nCollect coins for +25. Your best score is saved.",18,Cream);
+            CenterLabel(panel,"Life hint",new Vector2(0,-43),new Vector2(560,65),"THREE LIVES. ONE LONG RUN.\nAvoid low flying rays or dash through them.\nCollect coins for +25. Your best score is saved.",18,Cream);
             CenterLabel(panel,"Pause hint",new Vector2(0,-131),new Vector2(560,45),"ESC or P pauses. R restarts after a run or while paused.\nUse the sound button to mute music and effects.",16,Cream);
             helpBack=CenterButton(panel,"Got It",new Vector2(0,-204),new Vector2(350,48),"LET'S GO",CloseHelp);
             help.SetActive(false);
@@ -152,7 +154,7 @@ namespace DuneDash
         }
         GameObject Overlay(string name)
         {
-            var go=Group(name);var bg=go.AddComponent<Image>();bg.color=new Color(.1f,.2f,.22f,.53f);return go;
+            var go=Group(name);var bg=go.AddComponent<Image>();bg.color=new Color(.08f,.14f,.23f,.58f);return go;
         }
         Transform Card(Transform parent,float width,float height)
         {

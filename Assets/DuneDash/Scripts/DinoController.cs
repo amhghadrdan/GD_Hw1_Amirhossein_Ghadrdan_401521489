@@ -57,7 +57,7 @@ namespace DuneDash
             body.velocity = new Vector2(0, 13.7f);
             animator.SetBool(Grounded, false);
             AudioDirector.Instance.Play("Jump");
-            VisualEffects.Instance.Burst(transform.position + Vector3.up*.1f, new Color(.9f,.71f,.48f), 7);
+            VisualEffects.Instance.Burst(transform.position + Vector3.up*.1f, new Color(.63f,.75f,.8f), 7);
             return true;
         }
         public bool Dash()
