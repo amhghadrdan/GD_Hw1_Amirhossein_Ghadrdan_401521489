@@ -8,4 +8,4 @@
 - [فونت Lato](https://www.latofonts.com/)، اثر Łukasz Dziedzic؛ مجوز SIL OFL 1.1 در `FONT-LICENSE.txt`.
 - [NSIS](https://nsis.sourceforge.io/Docs/Chapter4.html) برای بسته‌بندی خروجی ویندوز؛ اسکریپت در `Tools/Portable/DuneDashPortable.nsi`.
 
-تصاویر و صداهای بازی با `Tools/generate_assets.py` تولید شده‌اند. در تهیهٔ کد و مستندات از OpenAI Codex کمک گرفته شده است.
+تصاویر و صداهای بازی با `Tools/generate_assets.py` تولید شده‌اند.
